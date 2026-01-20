@@ -12,8 +12,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Указываем, что класс PostService - является бином и его
-// нужно добавить в контекст приложения
 @Service
 public class PostService {
     private final Map<Long, Post> posts = new HashMap<>();
@@ -47,12 +45,6 @@ public class PostService {
         if (authorId == null) {
             throw new ConditionsNotMetException("Id автора должен быть указан");
         }
-
-//        if (userService.findUserById(authorId).isEmpty()) {
-//            throw new ConditionsNotMetException(
-//                    "Автор с id = " + authorId + " не найден"
-//            );
-//        }
 
         post.setId(getNextId());
         post.setPostDate(Instant.now());

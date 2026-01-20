@@ -25,12 +25,12 @@ public class UserService {
 
     public UserDto createUser(NewUserRequest request) {
         if (request.getEmail() == null || request.getEmail().isEmpty()) {
-            throw new ConditionsNotMetException("Имейл должен быть указан");
+            throw new ConditionsNotMetException("Email должен быть указан");
         }
 
         Optional<User> alreadyExistUser = userRepository.findByEmail(request.getEmail());
         if (alreadyExistUser.isPresent()) {
-            throw new DuplicatedDataException("Данный имейл уже используется");
+            throw new DuplicatedDataException("Данный email уже используется");
         }
 
         User user = UserMapper.mapToUser(request);
