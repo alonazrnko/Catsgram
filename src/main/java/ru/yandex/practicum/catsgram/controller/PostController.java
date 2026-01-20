@@ -2,7 +2,6 @@ package ru.yandex.practicum.catsgram.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
@@ -13,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 public class PostController {
+
     private final PostService postService;
 
     public PostController(PostService postService) {
@@ -26,6 +26,7 @@ public class PostController {
             @RequestParam(defaultValue = "10") int size
     ) {
         SortOrder sortOrder = SortOrder.from(sort);
+
         if (sortOrder == null) {
             throw new ParameterNotValidException(
                     "sort",
@@ -45,19 +46,21 @@ public class PostController {
                     "from",
                     "Начало выборки не может быть меньше нуля"
             );
-        } return postService.findAll(from, size, sortOrder);
+        }
+
+        return postService.findAll(from, size, sortOrder);
     }
 
-
-        @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Post findById(@PathVariable Long id) {
         return postService.findById(id);
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Post create(@RequestBody Post post) { return postService.create(post); }
+    public Post create(@RequestBody Post post) {
+        return postService.create(post);
+    }
 
     @PutMapping
     public Post update(@RequestBody Post newPost) {
