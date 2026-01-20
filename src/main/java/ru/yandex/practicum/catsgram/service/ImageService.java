@@ -30,6 +30,13 @@ public class ImageService {
     // директория для хранения изображений
     private final String imageDirectory = "C:/users/mabah/java/Catsgram/image";
 
+    public List<Image> getPostImages(long postId) {
+        return images.values()
+                .stream()
+                .filter(image -> image.getPostId() == postId)
+                .collect(Collectors.toList());
+    }
+
     // загружаем данные указанного изображения с диска
     public ImageData getImageData(long imageId) {
         if (!images.containsKey(imageId)) {

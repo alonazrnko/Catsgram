@@ -48,11 +48,11 @@ public class PostService {
             throw new ConditionsNotMetException("Id автора должен быть указан");
         }
 
-        if (userService.findUserById(authorId).isEmpty()) {
-            throw new ConditionsNotMetException(
-                    "Автор с id = " + authorId + " не найден"
-            );
-        }
+//        if (userService.findUserById(authorId).isEmpty()) {
+//            throw new ConditionsNotMetException(
+//                    "Автор с id = " + authorId + " не найден"
+//            );
+//        }
 
         post.setId(getNextId());
         post.setPostDate(Instant.now());
