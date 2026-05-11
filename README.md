@@ -1,78 +1,80 @@
-# Catsgram 
-Backend REST API for a social media application
+# Catsgram — Social Media Backend API
 
-Catsgram is a backend service for a social media–like application that allows users to publish posts with images, interact with content, and manage user profiles.  
-The project is built with a layered architecture and focuses on clean backend design, database interaction, and production-like infrastructure.
+A RESTful backend service for a social media application where users can publish posts with images, interact with content, and manage their profiles.
 
----
+## Features
 
-## 🚀 Features
+- **User management** — registration, profile retrieval and updates
+- **Post management** — create, retrieve and paginate posts
+- **Image upload and storage** — attach images to posts
+- **Layered architecture** — clean separation of controller, service and data access layers
+- **DTO & mappers** — API models decoupled from persistence models
+- **Centralized error handling** — global exception handler with meaningful error responses
+- **Request validation** — incoming data validated before processing
+- **Dockerized** — runs fully in Docker with a single command
 
-- User management
-- Post creation and retrieval
-- Image upload and storage
-- RESTful API design
-- Centralized error handling
-- Validation of incoming requests
-- Persistent data storage with PostgreSQL
-
----
-
-## 🧱 Architecture
-
-The application follows a **layered architecture**:
-
-- **Controller layer** — REST controllers handling HTTP requests and responses
-- **Service layer** — business logic and application rules
-- **DAL / DAO layer** — data access logic
-- **DTO & mappers** — separation of API models from persistence models
-- **Exception handling** — global exception handler with meaningful error responses
-
-This approach ensures clear separation of responsibilities and improves maintainability and testability.
-
----
-
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Java 21**
-- **Spring Boot 3**
-- **PostgreSQL**
-- **Docker & Docker Compose**
-- **Maven**
-- **Lombok**
-- **JUnit 5**
+- **Spring Boot 3.2**
+- **Spring JDBC** — data access without ORM overhead
+- **PostgreSQL** — primary relational database
+- **Lombok** — boilerplate reduction
+- **Docker & Docker Compose** — containerized local environment
+- **Maven** — build and dependency management
+- **Checkstyle** — enforced code style
 
----
+## Architecture
 
-## 🗄 Database
+The application follows a classic layered architecture:
 
-- PostgreSQL is used as the primary database
-- Database schema is initialized on startup
-- Docker volumes are excluded from version control
-- Data access is implemented via DAO pattern
+**Controller** → **Service** → **DAL/DAO** → **PostgreSQL**
 
----
+- `controller` — REST endpoints, request/response handling
+- `service` — business logic and application rules
+- `dal` — data access layer, SQL queries via Spring JDBC
+- `dto` — API-facing models
+- `mapper` — conversion between DTOs and domain models
+- `model` — core domain entities
+- `exception` — custom exceptions and global handler
 
-## 🧪 API Testing
+## Getting Started
 
-- REST endpoints are tested manually using Postman
-- JSON-based request/response format
-- Validation and error handling are verified through API tests
+### Requirements
+- Docker and Docker Compose installed
 
-## 📌 Project Status
+### Run locally
 
-The project is actively developed and extended.
-Planned improvements include:
+```bash
+git clone https://github.com/alonazrnko/catsgram.git
+cd catsgram
+docker compose up --build
+```
 
-- Extended test coverage
-- Security and authorization
-- Additional API features
+The API will be available at `http://localhost:8080`
 
-## 👩‍💻 Author
+### Stop the application
 
-**Alyona Nazarenko**
-Java Backend Developer (Junior)
+```bash
+docker compose down
+```
 
-GitHub: https://github.com/alonazrnko
+## API Endpoints
 
-Email: alonazrnko@gmail.com
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/users` | Get all users |
+| POST | `/users` | Create a new user |
+| GET | `/users/{id}` | Get user by ID |
+| PUT | `/users/{id}` | Update user |
+| GET | `/posts` | Get all posts (with pagination) |
+| POST | `/posts` | Create a new post |
+| GET | `/posts/{id}` | Get post by ID |
+| POST | `/posts/{id}/images` | Upload image to post |
+
+## Key Design Decisions
+
+- **Spring JDBC over JPA** — explicit SQL queries give full control over data access and make query behavior predictable
+- **DAO pattern** — each entity has a dedicated data access object, keeping persistence logic isolated
+- **Docker Compose** — PostgreSQL and the application run in isolated containers, making local setup reproducible with a single command
+- **Checkstyle** — enforced at compile time to maintain consistent code style across the project
